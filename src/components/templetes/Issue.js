@@ -5,6 +5,7 @@ import SerchText from "../atoms/SerchText";
 import ModalContant from "../organisms/ModalContant";
 import { colors } from "../../styles/Variables";
 import Modal from "react-modal";
+import List from "../organisms/List";
 
 Modal.setAppElement("#root");
 
@@ -43,9 +44,10 @@ const Table = styled.table`
   }
 `;
 
-const Issue = () => {
+const Issue = ({ data }) => {
   const [open, setOpen] = useState(false);
   const closeModal = () => setOpen(false);
+  const lists = Object.values(data);
   return (
     <Container>
       <SerchTop>
@@ -71,9 +73,9 @@ const Issue = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th>データがありません</th>
-            </tr>
+            {lists.map((list) => {
+              return <List list={list} />;
+            })}
           </tbody>
         </Table>
       </Board>
