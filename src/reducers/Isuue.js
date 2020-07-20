@@ -1,4 +1,4 @@
-import { ADD_LIST, REMOVE_LIST } from "../actions/Index";
+import { ADD_LIST } from "../actions/Index";
 
 const initialData = {
   1: {
@@ -31,7 +31,7 @@ const initialState = {
 
 const issue = (state = initialState, action) => {
   let newState = { ...state };
-  const { id, title, content, status, creater } = action.payload || {};
+  const { title, content } = action.payload || {};
   switch (action.type) {
     case ADD_LIST:
       newState.index++;

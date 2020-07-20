@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { ButtonGreen } from "../atoms/Button";
 import { colors } from "../../styles/Variables";
@@ -44,20 +44,46 @@ const Close = styled.a`
   cursor: pointer;
 `;
 
-const ModalContent = ({ closeModal }) => {
+const ModalContent = ({ closeModal, addList, removeList }) => {
+  const [text, setText] = useState("");
+  const [sentence, setSentence] = useState("");
+  const changeText = (e) => {
+    setText(e.target.value);
+  };
+  const changeSentence = (e) => {
+    setSentence(e.target.value);
+  };
+  const createNew = () => {
+    if (!text) {
+      return;
+    }
+    if (!sentence) {
+      return;
+    }
+    addList({ title: text });
+  };
   return (
     <Container>
       <Top>Issueを追加</Top>
       <Title>
         <label>タイトル</label>
-        <Input type="input" placeholder="タイトルを入力してください"></Input>
+        <Input
+          type="input"
+          placeholder="タイトルを入力してください"
+          value={text}
+          onChange={changeText}
+        ></Input>
       </Title>
       <Content>
         <label>説明</label>
-        <Textarea placeholder="説明を入力してください"></Textarea>
+        <Textarea
+          placeholder="説明を入力してください"
+          value={sentence}
+          onChange={changeSentence}
+        ></Textarea>
       </Content>
       <Buttons>
-        <ButtonGreen>作成</ButtonGreen>
+        <ButtonGreen onClick={createNew}>作成</ButtonGreen>
         <Close onClick={closeModal}>閉じる</Close>
       </Buttons>
     </Container>

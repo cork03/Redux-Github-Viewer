@@ -44,7 +44,7 @@ const Table = styled.table`
   }
 `;
 
-const Issue = ({ data }) => {
+const Issue = ({ data, removeList, addList }) => {
   const [open, setOpen] = useState(false);
   const closeModal = () => setOpen(false);
   const lists = Object.values(data);
@@ -74,13 +74,17 @@ const Issue = ({ data }) => {
           </thead>
           <tbody>
             {lists.map((list) => {
-              return <List list={list} />;
+              return <List key={list.id} list={list} />;
             })}
           </tbody>
         </Table>
       </Board>
       <Modal isOpen={open} style={customStyles}>
-        <ModalContant closeModal={closeModal}></ModalContant>
+        <ModalContant
+          closeModal={closeModal}
+          addList={addList}
+          removeList={removeList}
+        ></ModalContant>
       </Modal>
     </Container>
   );
