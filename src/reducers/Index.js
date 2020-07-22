@@ -1,10 +1,10 @@
-import profile from './Profile'
-import issue from './Isuue'
-import { combineReducers} from 'redux'
+import profile from "./Profile";
+import issue from "./Issue";
+import { combineReducers } from "redux";
 
 const reducer = combineReducers({
-    profile,
-    issue
-})
+  profile,
+  issue,
+});
 
-export default reducer
+export default reducer;

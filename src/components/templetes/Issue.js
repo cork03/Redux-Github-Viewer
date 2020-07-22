@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { ButtonGreen, ButtonRed } from "../atoms/Button";
 import SerchText from "../atoms/SerchText";
-import ModalContant from "../organisms/ModalContant";
+import ModalContent from "../organisms/ModalContent";
+import EditContent from "../organisms/EditContent";
 import { colors } from "../../styles/Variables";
 import Modal from "react-modal";
 import List from "../organisms/List";
@@ -41,20 +42,38 @@ const Table = styled.table`
   td {
     border-bottom: 1px solid ${colors.border};
     padding: 10px 5px;
+    cursor: pointer;
   }
 `;
 
 const Issue = ({ data, removeList, addList }) => {
   const [open, setOpen] = useState(false);
+  const [edit, setEdit] = useState(false);
   const closeModal = () => setOpen(false);
   const lists = Object.values(data);
+  const openNew = () => {
+    if (!edit) {
+      setOpen(true);
+    } else {
+      setEdit(false);
+      setOpen(true);
+    }
+  };
+  const openEdit = () => {
+    if (!edit) {
+      setEdit(true);
+      setOpen(true);
+    } else {
+      setOpen(true);
+    }
+  };
   return (
     <Container>
       <SerchTop>
         <Title>Issue</Title>
         <SerchText />
         <Buttons>
-          <ButtonGreen onClick={() => setOpen(true)}>New</ButtonGreen>
+          <ButtonGreen onClick={openNew}>New</ButtonGreen>
           <ButtonRed>Dlete</ButtonRed>
         </Buttons>
       </SerchTop>
@@ -74,17 +93,21 @@ const Issue = ({ data, removeList, addList }) => {
           </thead>
           <tbody>
             {lists.map((list) => {
-              return <List key={list.id} list={list} />;
+              return <List key={list.id} list={list} onClick={openEdit} />;
             })}
           </tbody>
         </Table>
       </Board>
       <Modal isOpen={open} style={customStyles}>
-        <ModalContant
-          closeModal={closeModal}
-          addList={addList}
-          removeList={removeList}
-        ></ModalContant>
+        {edit ? (
+          <EditContent closeModal={closeModal} />
+        ) : (
+          <ModalContent
+            closeModal={closeModal}
+            addList={addList}
+            removeList={removeList}
+          />
+        )}
       </Modal>
     </Container>
   );

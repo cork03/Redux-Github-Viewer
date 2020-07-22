@@ -33,7 +33,7 @@ const Textarea = styled.textarea`
 `;
 const Buttons = styled.div`
   display: flex;
-  margin-top: 100px;
+  margin-top: 40px;
   align-items: center;
   justify-content: flex-end;
 `;
@@ -43,24 +43,40 @@ const Close = styled.a`
   color: rgb(3, 102, 214);
   cursor: pointer;
 `;
+const Error = styled.div`
+  height: 40px;
+  margin-top: 40px;
 
-const ModalContent = ({ closeModal, addList, removeList }) => {
-  const [text, setText] = useState("");
-  const [sentence, setSentence] = useState("");
+  p {
+    color: ${colors.Red};
+    width: 100%;
+    background: #d73a4959;
+    padding: 8px;
+    border-radius: 6px;
+  }
+`;
+
+const ModalContent = ({ closeModal, addList }) => {
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [error, setError] = useState("");
   const changeText = (e) => {
-    setText(e.target.value);
+    setTitle(e.target.value);
   };
   const changeSentence = (e) => {
-    setSentence(e.target.value);
+    setContent(e.target.value);
   };
   const createNew = () => {
-    if (!text) {
+    if (!title) {
+      setError("タイトルを入力してください");
       return;
     }
-    if (!sentence) {
+    if (!content) {
+      setError("説明を入力してください");
       return;
     }
-    addList({ title: text });
+    addList({ title, content });
+    closeModal();
   };
   return (
     <Container>
@@ -70,7 +86,7 @@ const ModalContent = ({ closeModal, addList, removeList }) => {
         <Input
           type="input"
           placeholder="タイトルを入力してください"
-          value={text}
+          value={title}
           onChange={changeText}
         ></Input>
       </Title>
@@ -78,10 +94,11 @@ const ModalContent = ({ closeModal, addList, removeList }) => {
         <label>説明</label>
         <Textarea
           placeholder="説明を入力してください"
-          value={sentence}
+          value={content}
           onChange={changeSentence}
         ></Textarea>
       </Content>
+      <Error>{error && <p>{error}</p>}</Error>
       <Buttons>
         <ButtonGreen onClick={createNew}>作成</ButtonGreen>
         <Close onClick={closeModal}>閉じる</Close>

@@ -6,21 +6,21 @@ const initialData = {
     title: "A bug in Top Page",
     content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
     status: "Open",
-    creater: "",
+    creator: "",
   },
   2: {
     id: 2,
     title: "A problem of performance in Top Page",
     content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
     status: "Open",
-    creater: "",
+    creator: "",
   },
   3: {
     id: 3,
     title: "fix layout",
     content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
     status: "Close",
-    creater: "",
+    creator: "",
   },
 };
 
@@ -39,6 +39,8 @@ const issue = (state = initialState, action) => {
         id: newState.index,
         title,
         content,
+        status: "Open",
+        creator: "jjoo",
       };
       return newState;
     default:

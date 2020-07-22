@@ -19,7 +19,7 @@ export const ButtonGreen = styled(Button)`
   }
 `;
 export const ButtonRed = styled(Button)`
-  background: ${colors.buttonRed};
+  background: ${colors.Red};
   border-bottom: 2px solid #af1c2a;
   &:hover {
     background: #af1c2a;
