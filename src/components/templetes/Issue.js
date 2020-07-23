@@ -49,8 +49,15 @@ const Table = styled.table`
 const Issue = ({ data, removeList, addList }) => {
   const [open, setOpen] = useState(false);
   const [edit, setEdit] = useState(false);
+  const [search, setSearch] = useState("");
   const closeModal = () => setOpen(false);
-  const lists = Object.values(data);
+  const lists = () => {
+    const object = Object.values(data);
+    if (!search) {
+      return object;
+    }
+    return object.filter((item) => item.title.includes(search));
+  };
   const openNew = () => {
     if (!edit) {
       setOpen(true);
@@ -71,7 +78,7 @@ const Issue = ({ data, removeList, addList }) => {
     <Container>
       <SerchTop>
         <Title>Issue</Title>
-        <SerchText />
+        <SerchText search={search} setSearch={setSearch} />
         <Buttons>
           <ButtonGreen onClick={openNew}>New</ButtonGreen>
           <ButtonRed>Dlete</ButtonRed>
@@ -92,7 +99,7 @@ const Issue = ({ data, removeList, addList }) => {
             </tr>
           </thead>
           <tbody>
-            {lists.map((list) => {
+            {lists().map((list) => {
               return <List key={list.id} list={list} onClick={openEdit} />;
             })}
           </tbody>

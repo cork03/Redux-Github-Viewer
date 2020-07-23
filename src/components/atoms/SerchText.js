@@ -11,10 +11,18 @@ const Input = styled.input`
   outline: none;
 `;
 
-const SerchText = () => {
+const SerchText = ({ search, setSearch }) => {
+  const onChange = (e) => {
+    setSearch(e.target.value);
+  };
   return (
     <React.Fragment>
-      <Input type="input" placeholder="issue名で検索"></Input>
+      <Input
+        type="input"
+        placeholder="issue名で検索"
+        value={search}
+        onChange={onChange}
+      ></Input>
     </React.Fragment>
   );
 };
