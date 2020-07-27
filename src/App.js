@@ -1,18 +1,19 @@
-import React from 'react';
-import { GlobalStyle } from './styles/GlobalStyle'
-import styled from 'styled-components'
-import Header from './components/organisms/Header'
-import Profile from './containers/Profile'
-import Issue from './containers/Issue'
-import PullRequest from './components/templetes/PullRequest'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import React from "react";
+import { GlobalStyle } from "./styles/GlobalStyle";
+import styled from "styled-components";
+import Header from "./components/organisms/Header";
+import Profile from "./containers/Profile";
+import Issue from "./containers/Issue";
+import PullRequest from "./components/templetes/PullRequest";
+import TopPage from "./components/templetes/Index";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-const Container = styled.div``
+const Container = styled.div``;
 const Main = styled.div`
   max-width: 896px;
   margin: 0 auto;
-  padding: 32px 16px
-`
+  padding: 32px 16px;
+`;
 
 const App = () => {
   return (
@@ -22,15 +23,16 @@ const App = () => {
         <Header />
         <Main>
           <Switch>
-            <Route exact path='/'>
+            <Route exact path="/">
+              <TopPage />
             </Route>
-            <Route path='/issue'>
+            <Route path="/issue">
               <Issue />
             </Route>
-            <Route path='/pullRequest'>
+            <Route path="/pullRequest">
               <PullRequest />
             </Route>
-            <Route path='/profile'>
+            <Route path="/profile">
               <Profile />
             </Route>
           </Switch>
