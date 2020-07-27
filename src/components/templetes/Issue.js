@@ -46,10 +46,12 @@ const Table = styled.table`
   }
 `;
 
-const Issue = ({ data, removeList, addList }) => {
+const Issue = ({ data, removeList, addList, editList }) => {
   const [open, setOpen] = useState(false);
   const [edit, setEdit] = useState(false);
   const [search, setSearch] = useState("");
+  const [issue, setIssue] = useState();
+  const [check, setCheck] = useState({});
   const closeModal = () => setOpen(false);
   const lists = () => {
     const object = Object.values(data);
@@ -66,7 +68,8 @@ const Issue = ({ data, removeList, addList }) => {
       setOpen(true);
     }
   };
-  const openEdit = () => {
+  const openEdit = (issue) => {
+    setIssue(issue);
     if (!edit) {
       setEdit(true);
       setOpen(true);
@@ -74,6 +77,26 @@ const Issue = ({ data, removeList, addList }) => {
       setOpen(true);
     }
   };
+  const onCheck = (id) => {
+    if (check[id]) {
+      setCheck({
+        ...check,
+        [id]: false,
+      });
+    } else {
+      setCheck({
+        ...check,
+        [id]: true,
+      });
+    }
+  };
+  const onRemove = () => {
+    Object.keys(check).forEach((item) => {
+      removeList({ id: item });
+    });
+  };
+  console.log(Object.keys(check));
+
   return (
     <Container>
       <SerchTop>
@@ -81,7 +104,7 @@ const Issue = ({ data, removeList, addList }) => {
         <SerchText search={search} setSearch={setSearch} />
         <Buttons>
           <ButtonGreen onClick={openNew}>New</ButtonGreen>
-          <ButtonRed>Dlete</ButtonRed>
+          <ButtonRed onClick={onRemove}>Dlete</ButtonRed>
         </Buttons>
       </SerchTop>
       <Board>
@@ -100,14 +123,27 @@ const Issue = ({ data, removeList, addList }) => {
           </thead>
           <tbody>
             {lists().map((list) => {
-              return <List key={list.id} list={list} onClick={openEdit} />;
+              const onClick = () => openEdit(list);
+              return (
+                <List
+                  onCheck={onCheck}
+                  check={check[list.id]}
+                  key={list.id}
+                  list={list}
+                  onClick={onClick}
+                />
+              );
             })}
           </tbody>
         </Table>
       </Board>
       <Modal isOpen={open} style={customStyles}>
         {edit ? (
-          <EditContent closeModal={closeModal} />
+          <EditContent
+            issue={issue}
+            closeModal={closeModal}
+            editList={editList}
+          />
         ) : (
           <ModalContent
             closeModal={closeModal}

@@ -55,16 +55,26 @@ const Error = styled.div`
     border-radius: 6px;
   }
 `;
-
-const EditContent = ({ closeModal, addList }) => {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+const Status = styled.div`
+  padding-top: 20px;
+`;
+const StatusLabel = styled.label`
+  display: block;
+  margin-bottom: 7px;
+`;
+const EditContent = ({ closeModal, issue, editList }) => {
+  const [title, setTitle] = useState(issue.title);
+  const [content, setContent] = useState(issue.content);
+  const [status, setStatus] = useState(issue.status);
   const [error, setError] = useState("");
   const changeText = (e) => {
     setTitle(e.target.value);
   };
   const changeSentence = (e) => {
     setContent(e.target.value);
+  };
+  const changeStatus = (e) => {
+    setStatus(e.target.value);
   };
   const createNew = () => {
     if (!title) {
@@ -75,7 +85,7 @@ const EditContent = ({ closeModal, addList }) => {
       setError("説明を入力してください");
       return;
     }
-    addList({ title, content });
+    editList({ title, content, status, id: issue.id, creator: issue.creator });
     closeModal();
   };
   return (
@@ -98,6 +108,13 @@ const EditContent = ({ closeModal, addList }) => {
           onChange={changeSentence}
         ></Textarea>
       </Content>
+      <Status>
+        <StatusLabel>ステータス</StatusLabel>
+        <select value={status} onChange={changeStatus}>
+          <option value="Open">Open</option>
+          <option value="Close">Close</option>
+        </select>
+      </Status>
       <Error>{error && <p>{error}</p>}</Error>
       <Buttons>
         <ButtonGreen onClick={createNew}>更新</ButtonGreen>

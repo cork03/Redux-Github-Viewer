@@ -1,11 +1,18 @@
 import React from "react";
 
-const List = ({ list, onClick }) => {
+const List = ({ list, onClick, check, onCheck }) => {
   const { title, status, creator } = list;
+  const _onClick = (list) => {
+    onClick && onClick(list);
+  };
+  const _onCheck = (e) => {
+    e.stopPropagation();
+    onCheck && onCheck(list.id);
+  };
   return (
-    <tr onClick={onClick}>
+    <tr onClick={_onClick}>
       <td>
-        <input type="checkbox"></input>
+        <input checked={check} onClick={_onCheck} type="checkbox"></input>
       </td>
       <td>{title}</td>
       <td>{status}</td>

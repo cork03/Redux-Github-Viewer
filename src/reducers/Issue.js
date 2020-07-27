@@ -1,4 +1,4 @@
-import { ADD_LIST } from "../actions/Index";
+import { ADD_LIST, EDIT_LIST, REMOVE_LIST } from "../actions/Index";
 
 const initialData = {
   1: {
@@ -30,8 +30,9 @@ const initialState = {
 };
 
 const issue = (state = initialState, action) => {
-  let newState = { ...state };
-  const { title, content } = action.payload || {};
+  const { data } = state;
+  const newState = { ...state };
+  const { title, content, status, id, creator } = action.payload || {};
   switch (action.type) {
     case ADD_LIST:
       newState.index++;
@@ -43,6 +44,15 @@ const issue = (state = initialState, action) => {
         creator: "jjoo",
       };
       return newState;
+    case EDIT_LIST:
+      return {
+        ...state,
+        data: { ...data, [id]: { id, title, content, status, creator } },
+      };
+    case REMOVE_LIST:
+      const newData = { ...state.data };
+      delete newData[id];
+      return { ...newState, data: newData };
     default:
       return state;
   }
