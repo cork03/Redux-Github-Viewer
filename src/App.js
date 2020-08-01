@@ -17,7 +17,7 @@ const Main = styled.div`
 
 const App = () => {
   return (
-    <Router>
+    <Router basename="/Redux-Github-Viewer">
       <Container>
         <GlobalStyle />
         <Header />
