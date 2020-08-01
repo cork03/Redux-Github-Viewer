@@ -78,16 +78,29 @@ const Issue = ({ data, removeList, addList, editList }) => {
     }
   };
   const onCheck = (id) => {
+    const newCheck = { ...check };
     if (check[id]) {
-      setCheck({
-        ...check,
-        [id]: false,
-      });
+      delete newCheck[id];
     } else {
-      setCheck({
-        ...check,
-        [id]: true,
+      newCheck[id] = true;
+    }
+    setCheck(newCheck);
+  };
+  const [mark, setMark] = useState(false);
+  const allCheck = () => {
+    const el = Object.values(data).map((item) => {
+      return item.id;
+    });
+    const newCheck = { ...check };
+    if (mark) {
+      setMark(false);
+      setCheck({});
+    } else {
+      setMark(true);
+      el.forEach((item) => {
+        newCheck[item] = true;
       });
+      setCheck(newCheck);
     }
   };
   const onRemove = () => {
@@ -95,8 +108,7 @@ const Issue = ({ data, removeList, addList, editList }) => {
       removeList({ id: item });
     });
   };
-  console.log(Object.keys(check));
-
+  console.log(lists());
   return (
     <Container>
       <SerchTop>
@@ -112,7 +124,11 @@ const Issue = ({ data, removeList, addList, editList }) => {
           <thead>
             <tr>
               <th>
-                <input type="checkbox"></input>
+                <input
+                  type="checkbox"
+                  checked={mark}
+                  onClick={allCheck}
+                ></input>
               </th>
               <th></th>
               <th>ステータス</th>
@@ -122,22 +138,28 @@ const Issue = ({ data, removeList, addList, editList }) => {
             </tr>
           </thead>
           <tbody>
-            {lists().map((list) => {
-              const onClick = () => openEdit(list);
-              return (
-                <List
-                  onCheck={onCheck}
-                  check={check[list.id]}
-                  key={list.id}
-                  list={list}
-                  onClick={onClick}
-                />
-              );
-            })}
+            {lists().length ? (
+              lists().map((list) => {
+                const onClick = () => openEdit(list);
+                return (
+                  <List
+                    onCheck={onCheck}
+                    check={check[list.id]}
+                    key={list.id}
+                    list={list}
+                    onClick={onClick}
+                  />
+                );
+              })
+            ) : (
+              <tr>
+                <td>データがありません</td>
+              </tr>
+            )}
           </tbody>
         </Table>
       </Board>
-      <Modal isOpen={open} style={customStyles}>
+      <Modal isOpen={open}>
         {edit ? (
           <EditContent
             issue={issue}

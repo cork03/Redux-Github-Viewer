@@ -8,12 +8,17 @@ const Bar = styled.i`
 `;
 const Menu = () => {
   const [open, setOpen] = useState(false);
-  const Show = () => {
-    setOpen(!open);
+  const close = () => {
+    setOpen(false);
+    document.removeEventListener("click", close);
+  };
+  const Open = () => {
+    setOpen(true);
+    document.addEventListener("click", close);
   };
   return (
     <Container>
-      <Bar className="fa fa-bars" onClick={Show}></Bar>
+      <Bar className="fa fa-bars" onClick={Open}></Bar>
       <Lists open={open} />
     </Container>
   );

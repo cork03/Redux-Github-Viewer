@@ -1,4 +1,5 @@
 import React from "react";
+import dayjs from "dayjs";
 
 const List = ({ list, onClick, check, onCheck }) => {
   const { title, status, creator } = list;
@@ -17,8 +18,8 @@ const List = ({ list, onClick, check, onCheck }) => {
       <td>{title}</td>
       <td>{status}</td>
       <td>{creator}</td>
-      <td>07-20-2020</td>
-      <td>07-20-2020</td>
+      <td>{dayjs().format("MM-DD-YYYY")}</td>
+      <td>{dayjs().format("MM-DD-YYYY")}</td>
     </tr>
   );
 };

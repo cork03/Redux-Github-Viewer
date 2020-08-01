@@ -4,7 +4,6 @@ import TopIssue from "../templetes/TopIssue";
 import TopPull from "./TopPull";
 
 const Container = styled.div``;
-const Top = styled.div``;
 
 const TopPage = () => {
   const [issue, setIssue] = useState(true);
