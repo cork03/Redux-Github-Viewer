@@ -1,4 +1,4 @@
-import {createGlobalStyle} from 'styled-components'
+import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
   html{
@@ -28,5 +28,13 @@ export const GlobalStyle = createGlobalStyle`
   a{
     text-decoration: none;
   }
+  .ReactModal__Content {
+    margin: auto;
+    width: 60%;
+    @media (max-width: 576px) {
+      width: 100%;
+      right: 0 !important;
+      left: 0 !important;
+    }
+  }
 `;
-

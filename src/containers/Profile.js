@@ -1,16 +1,16 @@
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
-import Profile from '../components/templetes/Profile'
-import { actionCreators } from '../Actions/Index'
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import Profile from "../components/templetes/Profile";
+import { actionCreators } from "../actions/Index";
 
 const mapStateToProps = (state) => {
   return {
-    data: state.profile
-  }
-}
+    user: state.profile,
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators(actionCreators, dispatch)
-}
+  return bindActionCreators(actionCreators, dispatch);
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Profile)
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);
